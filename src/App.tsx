@@ -11,7 +11,9 @@ import AddTeacher from './pages/AddTeacher';
 import Finance from './pages/Finance';
 import Chat from './pages/Chat';
 import Events from './pages/Events';
+import AddEvent from './pages/AddEvent';
 import Notifications from './pages/Notifications';
+import Profile from './pages/Profile';
 import DashboardLayout from './layouts/DashboardLayout';
 
 function App() {
@@ -31,7 +33,9 @@ function App() {
           <Route path="finance" element={<Finance />} />
           <Route path="chats" element={<Chat />} />
           <Route path="events" element={<Events />} />
+          <Route path="events/add" element={<AddEvent />} />
           <Route path="notifications" element={<Notifications />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>
