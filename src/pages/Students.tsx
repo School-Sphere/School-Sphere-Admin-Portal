@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DataTable from '../components/common/DataTable';
 import SearchBar from '../components/common/SearchBar';
 import { Plus } from 'lucide-react';
 
@@ -31,7 +30,7 @@ const Students = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
 
-  const filteredData = mockData.filter(student => 
+  const filteredData = mockData.filter(student =>
     student.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (!selectedClass || student.class.toString() === selectedClass)
   );
@@ -44,18 +43,27 @@ const Students = () => {
     <div className="p-6">
       <div className="mb-8 flex justify-between items-center">
         <h1 className="text-2xl font-semibold text-gray-900">Students</h1>
-        <button 
-          onClick={() => navigate('/dashboard/students/add')}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          <Plus className="h-5 w-5 mr-2" />
-          Add Student
-        </button>
+        <div className="flex space-x-4">
+          <button
+            onClick={() => navigate('/dashboard/students/add')}
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Import from CSV
+          </button>
+
+          <button
+            onClick={() => navigate('/dashboard/students/add')}
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            <Plus className="h-5 w-5 mr-2" />
+            Add Student
+          </button>
+        </div>
       </div>
 
       <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <SearchBar 
-          onSearch={setSearchTerm} 
+        <SearchBar
+          onSearch={setSearchTerm}
           placeholder="Search by name..."
         />
         <select
@@ -87,8 +95,8 @@ const Students = () => {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredData.map((row) => (
-                <tr 
-                  key={row.id} 
+                <tr
+                  key={row.id}
                   className="hover:bg-gray-50 cursor-pointer"
                   onClick={() => handleRowClick(row.id)}
                 >

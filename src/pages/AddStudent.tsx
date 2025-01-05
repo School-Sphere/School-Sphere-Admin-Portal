@@ -13,7 +13,7 @@ const AddStudent = () => {
 
   return (
     <div className="p-6">
-      <button 
+      <button
         onClick={() => navigate('/dashboard/students')}
         className="mb-6 flex items-center text-gray-600 hover:text-gray-900"
       >
@@ -23,21 +23,21 @@ const AddStudent = () => {
 
       <div className="bg-white rounded-lg shadow-sm p-6">
         <h1 className="text-2xl font-bold text-gray-900 mb-6">Add New Student</h1>
-        
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Name *</label>
+              <label className="block text-sm font-medium text-gray-700">Name <span className="text-red-500">*</span></label>
               <input
                 type="text"
                 required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Gender *</label>
-              <select className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+              <label className="block text-sm font-medium text-gray-700">Gender <span className="text-red-500">*</span></label>
+              <select className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3">
                 <option>Please Select Gender</option>
                 <option>Male</option>
                 <option>Female</option>
@@ -45,8 +45,8 @@ const AddStudent = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Class *</label>
-              <select className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+              <label className="block text-sm font-medium text-gray-700">Class <span className="text-red-500">*</span></label>
+              <select className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3">
                 <option>Please Select Class</option>
                 {[1, 2, 3, 4, 5].map(num => (
                   <option key={num}>Class {num}</option>
@@ -55,17 +55,17 @@ const AddStudent = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Date Of Birth *</label>
+              <label className="block text-sm font-medium text-gray-700">Date Of Birth <span className="text-red-500">*</span></label>
               <input
                 type="date"
                 required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Blood group *</label>
-              <select className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+              <label className="block text-sm font-medium text-gray-700">Blood Group</label>
+              <select className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3">
                 <option>Please Select Blood Group</option>
                 {['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'].map(group => (
                   <option key={group}>{group}</option>
@@ -74,8 +74,8 @@ const AddStudent = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Religion *</label>
-              <select className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+              <label className="block text-sm font-medium text-gray-700">Religion</label>
+              <select className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3">
                 <option>Please Select Religion</option>
                 {['Christianity', 'Islam', 'Hinduism', 'Buddhism', 'Other'].map(religion => (
                   <option key={religion}>{religion}</option>
@@ -84,11 +84,11 @@ const AddStudent = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Admission Date *</label>
+              <label className="block text-sm font-medium text-gray-700">Admission Date <span className="text-red-500">*</span></label>
               <input
                 type="date"
                 required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3"
               />
             </div>
           </div>
@@ -97,35 +97,38 @@ const AddStudent = () => {
             <h2 className="text-lg font-medium text-gray-900 mb-4">Parent Details</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Father's Name *</label>
+                <label className="block text-sm font-medium text-gray-700">Father's Name <span className="text-red-500">*</span></label>
                 <input
                   type="text"
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Mother's Name</label>
+                <label className="block text-sm font-medium text-gray-700">Mother's Name <span className="text-red-500">*</span></label>
                 <input
                   type="text"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  required
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Email</label>
+                <label className="block text-sm font-medium text-gray-700">Email <span className="text-red-500">*</span></label>
                 <input
-                  type="email"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  type="text"
+                  required
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Phone</label>
+                <label className="block text-sm font-medium text-gray-700">Phone <span className="text-red-500">*</span></label>
                 <input
-                  type="tel"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  type="text"
+                  required
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3"
                 />
               </div>
 
@@ -133,37 +136,44 @@ const AddStudent = () => {
                 <label className="block text-sm font-medium text-gray-700">Father's Occupation</label>
                 <input
                   type="text"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  required
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Address *</label>
+                <label className="block text-sm font-medium text-gray-700">Address <span className="text-red-500">*</span></label>
                 <input
                   type="text"
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3"
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Religion *</label>
-                <select className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                  <option>Please Select Religion</option>
-                  {['Christianity', 'Islam', 'Hinduism', 'Buddhism', 'Other'].map(religion => (
-                    <option key={religion}>{religion}</option>
-                  ))}
-                </select>
-              </div>
             </div>
           </div>
 
           <div className="border-t border-gray-200 pt-6">
-            <h2 className="text-lg font-medium text-gray-900 mb-4">Student Photo</h2>
             <div className="flex items-center space-x-6">
-              <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center">
-                <span className="text-gray-400">No file chosen</span>
+              <div className="w-40 h-40 bg-gray-100 rounded-full flex items-center justify-center">
+                <div className="text-gray-400 flex flex-col items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-8 h-8 mb-2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 10.5h.008v.008h-.008v-.008zM21 21H3a2 2 0 01-2-2V7a2 2 0 012-2h3.172a2 2 0 001.414-.586l1.828-1.828a2 2 0 011.414-.586h3.172a2 2 0 011.414.586l1.828 1.828a2 2 0 001.414.586H21a2 2 0 012 2v12a2 2 0 01-2 2zM15.75 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                </div>
               </div>
+
               <div>
                 <p className="text-sm text-gray-500 mb-2">Upload Student Photo (150px X 150px)</p>
                 <input
@@ -175,19 +185,19 @@ const AddStudent = () => {
             </div>
           </div>
 
-          <div className="flex justify-end space-x-4">
+          <div className="flex justify-start space-x-4">
+            <button
+              type="submit"
+              className="px-10 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Save
+            </button>
             <button
               type="button"
               onClick={() => navigate('/dashboard/students')}
-              className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="px-10 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Reset
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Save
             </button>
           </div>
         </form>

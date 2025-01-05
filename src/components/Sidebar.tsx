@@ -16,8 +16,8 @@ const menuItems = [
   { icon: GraduationCap, label: 'Teachers', path: '/dashboard/teachers' },
   { icon: DollarSign, label: 'Finance', path: '/dashboard/finance' },
   { icon: Calendar, label: 'Events', path: '/dashboard/events' },
-  { icon: Bell, label: 'Notifications', path: '/dashboard/notifications' },
-  { icon: MessageSquare, label: 'Chats', path: '/dashboard/chats' },
+  // { icon: Bell, label: 'Notifications', path: '/dashboard/notifications' },
+  // { icon: MessageSquare, label: 'Chats', path: '/dashboard/chats' },
 ];
 
 const Sidebar = () => {
