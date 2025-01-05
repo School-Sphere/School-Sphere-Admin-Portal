@@ -7,7 +7,8 @@ interface EventFormProps {
 
 const EventForm: React.FC<EventFormProps> = ({ onSubmit }) => {
   return (
-    <form onSubmit={onSubmit} className="space-y-6">
+    <form onSubmit={onSubmit} className="bg-white rounded-lg p-6 space-y-6">
+      <h2 className="text-lg font-semibold text-gray-900 mb-4">Add New Event</h2>
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Title of Event

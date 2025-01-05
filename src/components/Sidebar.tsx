@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -6,7 +5,7 @@ import {
   GraduationCap, 
   DollarSign, 
   Calendar, 
-  Bell, 
+  Megaphone, 
   MessageSquare 
 } from 'lucide-react';
 
@@ -16,7 +15,7 @@ const menuItems = [
   { icon: GraduationCap, label: 'Teachers', path: '/dashboard/teachers' },
   { icon: DollarSign, label: 'Finance', path: '/dashboard/finance' },
   { icon: Calendar, label: 'Events', path: '/dashboard/events' },
-  // { icon: Bell, label: 'Notifications', path: '/dashboard/notifications' },
+  { icon: Megaphone, label: 'Announcement', path: '/dashboard/announcement' },
   // { icon: MessageSquare, label: 'Chats', path: '/dashboard/chats' },
 ];
 
