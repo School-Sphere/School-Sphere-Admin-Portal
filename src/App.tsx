@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -12,7 +11,7 @@ import Finance from './pages/Finance';
 import Chat from './pages/Chat';
 import Events from './pages/Events';
 import AddEvent from './pages/AddEvent';
-import Notifications from './pages/Notifications';
+import Announcements from './pages/Announcements';
 import Profile from './pages/Profile';
 import DashboardLayout from './layouts/DashboardLayout';
 
@@ -34,7 +33,7 @@ function App() {
           <Route path="chats" element={<Chat />} />
           <Route path="events" element={<Events />} />
           <Route path="events/add" element={<AddEvent />} />
-          <Route path="notifications" element={<Notifications />} />
+          <Route path="announcement" element={<Announcements />} />
           <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
