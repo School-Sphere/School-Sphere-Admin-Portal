@@ -1,5 +1,4 @@
-import React from 'react';
-import { Users, GraduationCap, Building2, Calendar } from 'lucide-react';
+import { Users, GraduationCap, Calendar } from 'lucide-react';
 import StatsCard from '../StatsCard';
 
 const stats = [
@@ -16,11 +15,6 @@ const stats = [
     change: { value: 0.25, type: 'decrease' },
   },
   {
-    icon: Building2,
-    label: 'Total Departments',
-    value: 10,
-  },
-  {
     icon: Calendar,
     label: 'Total Events',
     value: 10,
@@ -29,7 +23,7 @@ const stats = [
 
 const StatsGrid = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
       {stats.map((stat, index) => (
         <StatsCard key={index} {...stat} />
       ))}

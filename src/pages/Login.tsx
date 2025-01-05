@@ -1,26 +1,57 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lock, Mail } from 'lucide-react';
+import { signInSchool } from '../api/authApi';
+import AlertBox from '../components/AlertBox';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [alert, setAlert] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [loading, setLoading] = useState(false); // Loader state
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, you would validate credentials here
-    navigate('/dashboard');
+    setLoading(true); // Show loader
+    try {
+      const response = await signInSchool(email, password);
+
+      // Save token based on "Remember Me" selection
+      if (rememberMe) {
+        localStorage.setItem('token', response.token);
+      } else {
+        sessionStorage.setItem('token', response.token);
+      }
+
+      setAlert({ message: response.message, type: 'success' });
+      setTimeout(() => {
+        setLoading(false); // Hide loader
+        navigate('/dashboard');
+      }, 2000);
+    } catch (error: any) {
+      setAlert({ message: error.message || 'Login failed', type: 'error' });
+      setLoading(false); // Hide loader
+    }
   };
 
   return (
-    <div className="min-h-screen w-full flex">
+    <div className="min-h-screen w-full flex relative">
+      {/* Alert Box */}
+      {alert && <AlertBox message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
+
+      {/* Loader */}
+      {loading && (
+        <div className="absolute inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="loader border-t-4 border-b-4 border-indigo-500 rounded-full w-12 h-12 animate-spin"></div>
+        </div>
+      )}
+
       {/* Left side - Image */}
       <div className="hidden lg:block lg:w-1/2 relative">
-        <div className="absolute inset-0 bg-rose-500/30">
+        <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+            src="/login.png"
             alt="School hallway"
             className="w-full h-full object-cover mix-blend-multiply"
           />
@@ -30,7 +61,7 @@ const Login = () => {
       {/* Right side - Login Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 lg:p-16">
         <div className="w-full max-w-md space-y-8">
-          <div className="text-center">
+          <div className="text-left">
             <h2 className="text-3xl font-bold text-gray-900">Admin Login</h2>
             <p className="mt-2 text-sm text-gray-600">Welcome back! Please enter your details</p>
           </div>
@@ -41,42 +72,30 @@ const Login = () => {
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   Email address
                 </label>
-                <div className="mt-1 relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Mail className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Enter your email"
-                  />
-                </div>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="block w-full pl-3 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
               </div>
 
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                   Password
                 </label>
-                <div className="mt-1 relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Enter your password"
-                  />
-                </div>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="block w-full pl-3 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
               </div>
             </div>
 

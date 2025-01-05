@@ -5,13 +5,9 @@ interface StatsCardProps {
   icon: LucideIcon;
   label: string;
   value: number;
-  change?: {
-    value: number;
-    type: 'increase' | 'decrease';
-  };
 }
 
-const StatsCard: React.FC<StatsCardProps> = ({ icon: Icon, label, value, change }) => {
+const StatsCard: React.FC<StatsCardProps> = ({ icon: Icon, label, value }) => {
   return (
     <div className="bg-white rounded-lg p-6 shadow-sm">
       <div className="flex items-center gap-4">
@@ -21,13 +17,6 @@ const StatsCard: React.FC<StatsCardProps> = ({ icon: Icon, label, value, change 
         <div>
           <h3 className="text-sm font-medium text-gray-500">{label}</h3>
           <p className="text-2xl font-semibold text-gray-900">{value}</p>
-          {change && (
-            <p className={`text-sm ${
-              change.type === 'increase' ? 'text-green-600' : 'text-red-600'
-            }`}>
-              {change.type === 'increase' ? '↑' : '↓'} {change.value}% than last quarter
-            </p>
-          )}
         </div>
       </div>
     </div>
