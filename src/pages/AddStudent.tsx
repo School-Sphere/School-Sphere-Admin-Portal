@@ -1,9 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { fetchClasses } from '../api/studentApi';
 
 const AddStudent = () => {
   const navigate = useNavigate();
+
+  // State for classes and loading
+  const [classes, setClasses] = useState<{ id: string; className: string; section: string }[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  // Fetch classes from API
+  const loadClasses = async () => {
+    try {
+      setLoading(true);
+
+      // Get token from sessionStorage or localStorage
+      const token = sessionStorage.getItem('token') || localStorage.getItem('token');
+      if (!token) {
+        console.error('No token found');
+        return;
+      }
+
+      // Fetch classes from the API
+      const response = await fetchClasses(1, token); // Assuming page=1 initially
+      setClasses(response.data.docs); // Save classes to state
+    } catch (error) {
+      console.error('Error fetching classes:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Load classes on component mount
+  useEffect(() => {
+    loadClasses();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,6 +58,24 @@ const AddStudent = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div>
+              <label className="block text-sm font-medium text-gray-700">Student ID <span className="text-red-500">*</span></label>
+              <input
+                type="text"
+                required
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Email <span className="text-red-500">*</span></label>
+              <input
+                type="text"
+                required
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3"
+              />
+            </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700">Name <span className="text-red-500">*</span></label>
               <input
@@ -36,26 +86,36 @@ const AddStudent = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Gender <span className="text-red-500">*</span></label>
-              <select className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3">
-                <option>Please Select Gender</option>
-                <option>Male</option>
-                <option>Female</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Class <span className="text-red-500">*</span></label>
-              <select className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3">
-                <option>Please Select Class</option>
-                {[1, 2, 3, 4, 5].map(num => (
-                  <option key={num}>Class {num}</option>
+              <label className="block text-sm font-medium text-gray-700">
+                Class <span className="text-red-500">*</span>
+              </label>
+              <select
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3"
+                required
+              >
+                <option value="" disabled>
+                  {loading ? 'Loading classes...' : 'Please Select Class'}
+                </option>
+                {classes.map((classItem) => (
+                  <option key={classItem.id} value={classItem.id}>
+                    Class {classItem.className} - Section {classItem.section}
+                  </option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Date Of Birth <span className="text-red-500">*</span></label>
+              <label className="block text-sm font-medium text-gray-700">Gender</label>
+              <select className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3">
+                <option>Please Select Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Date Of Birth</label>
               <input
                 type="date"
                 required
@@ -84,7 +144,7 @@ const AddStudent = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Admission Date <span className="text-red-500">*</span></label>
+              <label className="block text-sm font-medium text-gray-700">Admission Date</label>
               <input
                 type="date"
                 required
@@ -97,7 +157,7 @@ const AddStudent = () => {
             <h2 className="text-lg font-medium text-gray-900 mb-4">Parent Details</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Father's Name <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-medium text-gray-700">Father's Name</label>
                 <input
                   type="text"
                   required
@@ -106,7 +166,7 @@ const AddStudent = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Mother's Name <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-medium text-gray-700">Mother's Name</label>
                 <input
                   type="text"
                   required
@@ -115,7 +175,7 @@ const AddStudent = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Email <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-medium text-gray-700">Email</label>
                 <input
                   type="text"
                   required
@@ -124,7 +184,7 @@ const AddStudent = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Phone <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-medium text-gray-700">Phone</label>
                 <input
                   type="text"
                   required
@@ -142,7 +202,7 @@ const AddStudent = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Address <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-medium text-gray-700">Address</label>
                 <input
                   type="text"
                   required
