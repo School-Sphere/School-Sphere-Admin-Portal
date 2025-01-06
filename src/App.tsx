@@ -14,6 +14,7 @@ import AddEvent from './pages/AddEvent';
 import Announcements from './pages/Announcements';
 import Profile from './pages/Profile';
 import DashboardLayout from './layouts/DashboardLayout';
+import FileUpload from './components/dashboard/FileUpload';
 
 function App() {
   return (
@@ -23,11 +24,13 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
+          <Route path="/dashboard/students/upload" element={<FileUpload />} />
+          <Route path="/dashboard/teachers/upload" element={<FileUpload />} />
           <Route path="students" element={<Students />} />
-          <Route path="students/:id" element={<StudentDetail />} />
+          <Route path="students/:studentId" element={<StudentDetail />} />
           <Route path="students/add" element={<AddStudent />} />
           <Route path="teachers" element={<Teachers />} />
-          <Route path="teachers/:id" element={<TeacherDetail />} />
+          <Route path="teachers/:teacherId" element={<TeacherDetail />} />
           <Route path="teachers/add" element={<AddTeacher />} />
           <Route path="finance" element={<Finance />} />
           <Route path="chats" element={<Chat />} />

@@ -6,4 +6,13 @@ export interface Teacher {
     section: string | null;
     gender: string;
     contactNumber: string;
-}
+    email: string;
+    designation: string;
+    qualifications: string;
+    address: string;
+    dob: string;
+    bloodGroup: string;
+    religion: string;
+    doj: string; // Date of Joining
+    profilePicture: string | null;
+}  

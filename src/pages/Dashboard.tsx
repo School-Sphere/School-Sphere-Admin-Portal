@@ -1,30 +1,58 @@
+import { useEffect, useState } from 'react';
+import { fetchClasses } from '../api/classApi';
+import { ClassData } from '../models/classModel';
 import Header from '../components/Header';
 import StatsGrid from '../components/dashboard/StatsGrid';
 
 const ClassTable = () => {
-  const classData = [
-    {
-      class: 'Class -6',
-      section: 'A',
-      teacher: 'Sushmita Sharma',
-      session: '2023-24',
-      strength: 40,
-    },
-    {
-      class: 'Class -6',
-      section: 'A',
-      teacher: 'Sushmita Sharma',
-      session: '2023-24',
-      strength: 40,
-    },
-    {
-      class: 'Class -6',
-      section: 'A',
-      teacher: 'Sushmita Sharma',
-      session: '2023-24',
-      strength: 40,
-    },
-  ];
+  const [classData, setClassData] = useState<ClassData[]>([]); // Explicitly define the type
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (!token) {
+          console.error('No token found');
+          return;
+        }
+
+        const response = await fetchClasses(1, token || '');
+        const classes: ClassData[] = response.data.docs.map((doc: any) => ({
+          class: `Class - ${doc.className}`,
+          section: doc.section,
+          teacher: doc.classTeacher,
+          strength: doc.totalStudents,
+        }));
+        setClassData(classes);
+      } catch (err: any) {
+        setError(err.message || 'An error occurred while fetching classes');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-10">
+        <div className="loader border-t-2 border-b-2 border-indigo-600 rounded-full w-10 h-10 animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-6">
+        <span className="text-red-600 text-lg">{error}</span>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white shadow rounded-lg p-6">
@@ -50,9 +78,6 @@ const ClassTable = () => {
                 Class Teacher
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Session
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Strength
               </th>
             </tr>
@@ -63,7 +88,6 @@ const ClassTable = () => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{classInfo.class}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{classInfo.section}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{classInfo.teacher}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{classInfo.session}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{classInfo.strength}</td>
               </tr>
             ))}

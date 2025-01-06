@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { fetchClasses } from '../api/studentApi';
+import { fetchClasses } from '../api/classApi';
 
 const AddStudent = () => {
   const navigate = useNavigate();
