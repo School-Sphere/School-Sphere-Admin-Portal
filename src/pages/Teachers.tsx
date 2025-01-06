@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plus, ChevronLeft, ChevronRight } from 'lucide-react';
-import { fetchClasses, fetchTeachers } from '../api/studentApi';
+import { fetchClasses} from '../api/classApi';
+import { fetchTeachers } from '../api/teacherApi';
 import { Teacher } from '../models/teacherModel';
 import SearchBar from '../components/common/SearchBar';
 import Header from '../components/Header';
@@ -89,13 +90,22 @@ const Teachers = () => {
       <div className="p-6">
         <div className="mb-8 flex justify-between items-center">
           <h1 className="text-2xl font-semibold text-gray-900">Teachers</h1>
-          <button
-            onClick={() => navigate('/dashboard/teachers/add')}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            <Plus className="h-5 w-5 mr-2" />
-            Add Teacher
-          </button>
+          <div className="flex space-x-4">
+            <button
+              onClick={() => navigate('/dashboard/teachers/upload')}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Import from CSV
+            </button>
+
+            <button
+              onClick={() => navigate('/dashboard/teachers/add')}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              <Plus className="h-5 w-5 mr-2" />
+              Add Teacher
+            </button>
+          </div>
         </div>
 
         <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -137,7 +147,7 @@ const Teachers = () => {
                   {filteredData.map((teacher) => (
                     <tr
                       key={teacher.id}
-                      onClick={() => handleRowClick(teacher.id)}
+                      onClick={() => handleRowClick(teacher.teacherId)}
                       className="hover:bg-gray-50 cursor-pointer"
                     >
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">

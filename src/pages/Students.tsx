@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 import { fetchStudents } from '../api/studentApi';
-import { fetchClasses } from '../api/studentApi'; // Import the fetchClasses API
+import { fetchClasses } from '../api/classApi'; // Import the fetchClasses API
 import { Student } from '../models/studentModel';
 import SearchBar from '../components/common/SearchBar';
 import Header from '../components/Header';
@@ -22,14 +22,12 @@ const Students = () => {
     try {
       setLoading(true); // Show loader before fetching students
 
-      // Get token from localStorage or sessionStorage
       const token = localStorage.getItem('token') || sessionStorage.getItem('token');
       if (!token) {
         console.error('No token found');
         return;
       }
 
-      // Fetch students from the API
       const response = await fetchStudents(page, token);
       setStudents(response.data.docs); // Set the students data
       setTotalPages(response.data.totalPages); // Set the total pages
@@ -44,14 +42,12 @@ const Students = () => {
     try {
       setLoadingClasses(true); // Show loader before fetching classes
 
-      // Get token from localStorage or sessionStorage
       const token = localStorage.getItem('token') || sessionStorage.getItem('token');
       if (!token) {
         console.error('No token found');
         return;
       }
 
-      // Fetch classes from the API
       const response = await fetchClasses(1, token); // Fetch page 1 of classes
       const classList = response.data.docs.map(
         (cls: { className: string; section: string }) =>
@@ -65,12 +61,10 @@ const Students = () => {
     }
   };
 
-  // Fetch students when the component mounts or when `page` changes
   useEffect(() => {
     fetchStudentData();
   }, [page]);
 
-  // Fetch classes when the component mounts
   useEffect(() => {
     fetchClassData();
   }, []);
@@ -93,7 +87,7 @@ const Students = () => {
           <h1 className="text-2xl font-semibold text-gray-900">Students</h1>
           <div className="flex space-x-4">
             <button
-              onClick={() => navigate('/dashboard/students/add')}
+              onClick={() => navigate('/dashboard/students/upload')}
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Import from CSV
@@ -150,7 +144,7 @@ const Students = () => {
                     <tr
                       key={student.id}
                       className="hover:bg-gray-50 cursor-pointer"
-                      onClick={() => handleRowClick(student.id)}
+                      onClick={() => handleRowClick(student.studentId)}
                     >
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {student.studentId || '-'}

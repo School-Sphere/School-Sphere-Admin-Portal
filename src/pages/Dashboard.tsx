@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchClasses } from '../api/studentApi';
+import { fetchClasses } from '../api/classApi';
 import { ClassData } from '../models/classModel';
 import Header from '../components/Header';
 import StatsGrid from '../components/dashboard/StatsGrid';
