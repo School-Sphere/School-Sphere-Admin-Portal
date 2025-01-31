@@ -1,16 +1,16 @@
-import { useNavigate } from 'react-router-dom';
-import AnnouncementForm from '../components/forms/AnnouncementForm';
-import PastAnnouncements from '../components/PastAnnouncements';
+import React, { useState } from 'react';
+import { ResizableBox } from 'react-resizable';
+import 'react-resizable/css/styles.css';
 import Header from '../components/Header';
+import PastAnnouncements from '../components/PastAnnouncements';
+import AnnouncementForm from '../components/forms/AnnouncementForm';
 
 const Announcements = () => {
-  const navigate = useNavigate();
+  const [refresh, setRefresh] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate('/dashboard/events');
+  const handleAnnouncementAdded = () => {
+    setRefresh((prev) => !prev);
   };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -21,16 +21,24 @@ const Announcements = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-6 h-full">
-          <div className="col-span-1 bg-white rounded-lg shadow-lg flex flex-col h-full">
-            <div className="flex-1 overflow-y-auto">
-              <PastAnnouncements />
+        <div className="flex h-full">
+          <ResizableBox
+            className="bg-white rounded-lg shadow-lg flex flex-col h-full"
+            width={300}
+            height={500}
+            minConstraints={[200, Infinity]}
+            maxConstraints={[600, Infinity]}
+            axis="x"
+          >
+            {/* Disable scrolling on ResizableBox */}
+            <div className="flex-1 overflow-hidden">
+              <PastAnnouncements refresh={refresh} />
             </div>
-          </div>
+          </ResizableBox>
 
-          <div className="col-span-3 bg-white rounded-lg shadow-lg flex flex-col h-full">
+          <div className="flex-1 bg-white rounded-lg shadow-lg flex flex-col h-full ml-6">
             <div className="flex-1 overflow-y-auto">
-              <AnnouncementForm onSubmit={handleSubmit} />
+              <AnnouncementForm onAnnouncementAdded={handleAnnouncementAdded} />
             </div>
           </div>
         </div>
