@@ -28,3 +28,20 @@ export const createEvent = async (eventData: {
     throw error.response?.data || { message: 'An unknown error occurred' };
   }
 };
+
+export const fetchEvents = async (page: number, limit: number = 10) => {
+    try {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (!token) {
+            throw new Error('Authentication token is missing');
+        }
+        const response = await apiClient.get(`/get-all-events?page=${page}&limit=${limit}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error: any) {
+        throw error.response?.data || { message: 'An unknown error occurred' };
+    }
+};

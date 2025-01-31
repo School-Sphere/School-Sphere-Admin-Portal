@@ -26,6 +26,7 @@ const Announcements = () => {
             className="bg-white rounded-lg shadow-lg flex flex-col h-full"
             width={300}
             height={500}
+            resizeHandles={['e']}
             minConstraints={[200, Infinity]}
             maxConstraints={[600, Infinity]}
             axis="x"

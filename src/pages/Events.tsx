@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { Resizable, ResizableBox } from 'react-resizable';
+import 'react-resizable/css/styles.css'; // Import the default styles for the resize handle
 import UpcomingEvents from '../components/events/UpcomingEvents';
 import EventForm from '../components/forms/EventForm';
 import Header from '../components/Header';
@@ -10,6 +12,7 @@ const Events = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [width, setWidth] = useState(300);
 
   const handleSubmit = async (e: React.FormEvent, formData: any, resetForm: () => void) => {
     e.preventDefault();
@@ -33,9 +36,9 @@ const Events = () => {
       });
 
       setAlert({ message: 'Event created successfully!', type: 'success' });
-      resetForm(); // Clear the form data
+      resetForm();
       setTimeout(() => {
-        navigate('/dashboard/events'); // Redirect after success
+        navigate('/dashboard/events');
       }, 2000);
     } catch (err: any) {
       setAlert({ message: err.message || 'Failed to create event.', type: 'error' });
@@ -56,14 +59,24 @@ const Events = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-6 h-full">
-          <div className="col-span-1 bg-white rounded-lg shadow-lg flex flex-col h-full">
+        <div className="flex gap-6 h-full">
+          <ResizableBox
+            width={300}
+            height={500} // Full height
+            minConstraints={[200, Infinity]} // Minimum width
+            maxConstraints={[600, Infinity]} // Maximum width
+            onResize={(e, { size }) => setWidth(size.width)} // Update width on resize
+            axis="x" 
+            resizeHandles={['e']}
+            className="bg-white rounded-lg shadow-lg flex flex-col h-full"
+          >
             <div className="flex-1 overflow-y-auto">
               <UpcomingEvents />
             </div>
-          </div>
+          </ResizableBox>
 
-          <div className="col-span-3 bg-white rounded-lg shadow-lg flex flex-col h-full">
+          {/* Right Panel (Event Form) */}
+          <div className="flex-1 bg-white rounded-lg shadow-lg flex flex-col h-full">
             <div className="flex-1 overflow-y-auto">
               <EventForm
                 onSubmit={(e, formData, resetForm) => handleSubmit(e, formData, resetForm)}
