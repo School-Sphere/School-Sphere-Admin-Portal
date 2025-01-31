@@ -59,3 +59,39 @@ export const fetchStudentById = async (studentId: string, token: string): Promis
     throw error.response?.data || { message: 'Failed to fetch student data' };
   }
 };
+export const createStudent = async (studentData: any, token: string): Promise<Student> => {
+  try {
+    const response = await apiClient.post('/add-student', studentData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const student = response.data.data;
+
+    return {
+      id: student._id,
+      studentId: student.studentId,
+      name: student.name,
+      gender: student.gender,
+      parentContact: student.parentContact,
+      email: student.email,
+      dob: student.dob,
+      bloodGroup: student.bloodGroup || null,
+      religion: student.religion || null,
+      doa: student.doa,
+      fatherName: student.fatherName || null,
+      motherName: student.motherName || null,
+      parentEmail: student.parentEmail || null,
+      address: student.address || null,
+      className: student.className || null,
+      section: student.section || null,
+      fatherOccupation: student.fatherOccupation || null,
+      motherOccupation: student.motherOccupation || null,
+      profilePicture: student.profilePicture || null,
+    };
+  } catch (error: any) {
+    throw error.response?.data || { message: 'Failed to create student' };
+  }
+};
