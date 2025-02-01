@@ -6,8 +6,6 @@ import { createTeacher } from '../api/teacherApi';
 const AddTeacher = () => {
   const navigate = useNavigate();
 
-  // State for departments, loading, and error messages
-  const [departments, setDepartments] = useState<{ id: string; departmentName: string }[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -16,7 +14,6 @@ const AddTeacher = () => {
     teacherId: '',
     email: '',
     name: '',
-    departmentId: '',
     gender: '',
     dob: '',
     qualification: '',
@@ -25,33 +22,8 @@ const AddTeacher = () => {
     profilePicture: null as File | null,
   });
 
-  // Fetch departments from API
-  const loadDepartments = async () => {
-    try {
-      setLoading(true);
-      setErrorMessage(''); // Reset error message
 
-      // Get token from sessionStorage or localStorage
-      const token = sessionStorage.getItem('token') || localStorage.getItem('token');
-      if (!token) {
-        setErrorMessage('Authentication token not found.');
-        return;
-      }
 
-      // Fetch departments from the API
-      const response = { "data": { "docs": [{ "id": "01", "departmentName": "Paras" }, { "id": "02", "departmentName": "Pikachu" }, { "id": "03", "departmentName": "Doraemon" }] } };
-      setDepartments(response.data.docs); // Save departments to state
-    } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || 'Error fetching departments.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Load departments on component mount
-  useEffect(() => {
-    loadDepartments();
-  }, []);
 
   // Handler to update form state
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -149,28 +121,6 @@ const AddTeacher = () => {
                 required
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3"
               />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Department <span className="text-red-500">*</span>
-              </label>
-              <select
-                name="departmentId"
-                value={formData.departmentId}
-                onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base h-12 bg-[#DDDEEE80] px-3"
-                required
-              >
-                <option value="" disabled>
-                  {loading ? 'Loading departments...' : 'Please Select Department'}
-                </option>
-                {departments.map((department) => (
-                  <option key={department.id} value={department.id}>
-                    {department.departmentName}
-                  </option>
-                ))}
-              </select>
             </div>
 
             <div>
